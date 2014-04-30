@@ -1,0 +1,1 @@
+require File.expand_path('./../complexity_for_beginners/complexity', __FILE__)

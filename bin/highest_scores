@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('./../../lib/complexity_for_beginners', __FILE__)
+
+directory = ARGV[0] || '**'
+
+r = Dir.glob(File.join(File.expand_path('./../../examples', __FILE__), directory, '*.rb')).each_with_object({}) do |file, hsh|
+  hsh[file] = ComplexityForBeginners::Complexity.score(File.read(file), file)
+end
+
+puts r.sort_by{|k, v| -v}.take(10)
+
