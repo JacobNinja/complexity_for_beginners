@@ -6,7 +6,7 @@ module ComplexityForBeginners
 
     def self.score(rb, file='-')
       f = Flog.new
-      f.flog_ruby(rb, file)
+      f.flog_ruby!(rb, file)
       f.calculate_total_scores
       f.total_score
     rescue Racc::ParseError
