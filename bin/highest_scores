@@ -4,9 +4,17 @@ require File.expand_path('./../../lib/complexity_for_beginners', __FILE__)
 
 directory = ARGV[0] || '**'
 
-r = Dir.glob(File.join(File.expand_path('./../../examples', __FILE__), directory, '*.rb')).each_with_object({}) do |file, hsh|
-  hsh[file] = ComplexityForBeginners::Complexity.score(File.read(file), file)
+Dir.chdir(File.expand_path('./../../examples', __FILE__))
+
+r = Dir.glob(File.join(directory, '*.rb')).each_with_object(Hash.new{|h, k| h[k] = {}}) do |file, hsh|
+  example = File.dirname(file)
+  hsh[example][file] = ComplexityForBeginners::Complexity.score(File.read(file), file)
 end
 
-puts r.sort_by{|k, v| -v}.take(10)
+r.each do |(example, results)|
+  puts "Top results for #{example}"
+  results.sort_by {|k, v| -v}.take(20).each do |(file, result)|
+    puts "#{file}: #{result}"
+  end
+end
 
